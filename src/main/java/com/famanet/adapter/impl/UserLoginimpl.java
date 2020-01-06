@@ -12,6 +12,7 @@ public class UserLoginimpl implements IUserLoginAdapter {
 
 	@Autowired
 	IUserLoginRepositery iUserLoginRepositery;
+	
 	public UserLogin createLoginDetails(User entity) {
 		return null;
 	}

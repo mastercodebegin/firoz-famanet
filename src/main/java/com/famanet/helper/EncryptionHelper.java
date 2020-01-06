@@ -6,15 +6,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class EncryptionHelper {
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder ;
 	
 	@Bean
-	
-	public BCryptPasswordEncoder getobj()
+	public BCryptPasswordEncoder getbCryptPasswordEncoder()
 	{
 		if(bCryptPasswordEncoder==null)
 		{
@@ -25,7 +24,7 @@ public class EncryptionHelper {
 	}
 	
 	public String encodePassword(String pswd)
-	{   bCryptPasswordEncoder=getobj();
+	{   bCryptPasswordEncoder=getbCryptPasswordEncoder();
 		bCryptPasswordEncoder.encode(pswd);
 		return pswd;
 	}

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.famanet.adapter.IUserLoginAdapter;
+import com.famanet.adapter.impl.UserLoginAdapter;
 import com.famanet.helper.EncryptionHelper;
 import com.famanet.model.User;
 import com.famanet.model.UserLogin;
@@ -20,7 +20,7 @@ import com.famanet.util.FamaUtil;
 public class UserLoginServiceimpl implements IUserLoginService {
 	 
 @Autowired
-IUserLoginAdapter iUserLoginAdapter;
+UserLoginAdapter iUserLoginAdapter;
 @Autowired
 IUserLoginRepositery iUserLoginRepositery;
 @Autowired

@@ -3,12 +3,12 @@ package com.famanet.adapter.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.famanet.adapter.IUserLoginAdapter;
+import com.famanet.adapter.IUserLogin;
 import com.famanet.model.User;
 import com.famanet.model.UserLogin;
 import com.famanet.repositery.IUserLoginRepositery;
 @Component
-public class UserLoginimpl implements IUserLoginAdapter {
+public class UserLoginAdapter implements IUserLogin {
 
 	@Autowired
 	IUserLoginRepositery iUserLoginRepositery;

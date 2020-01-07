@@ -26,9 +26,9 @@ IUserLoginRepositery iUserLoginRepositery;
 @Autowired
 IUserService IUserService;
 @Autowired
-EncryptionHelper Helper;
+EncryptionHelper encryptionHelper;
 public UserLogin create(UserLogin entity) {
-		// TODO Auto-generated method stub
+	iUserLoginAdapter.create(entity);
 		return null;
 	}
 
@@ -53,10 +53,10 @@ public UserLogin create(UserLogin entity) {
 		userLogin.setUsername(user.getEmail());
 		String randompswd = FamaUtil.getPassword(8);
 		System.out.println(randompswd);
-		String encryptpswd=Helper.encodePassword(randompswd);
-		System.out.println(randompswd);
+		String encryptpswd=encryptionHelper.encodePassword(randompswd);
+		System.out.println(encryptpswd);
 		userLogin.setUser(user);
-		userLogin.setPassword(encryptpswd);
+		userLogin.setPassword(encryptionHelper.encodePassword(randompswd));
 		UserLogin createdUser = create(userLogin);
 		//iUserLoginRepositery.save(userLogin);
 		return createdUser;

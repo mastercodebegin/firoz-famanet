@@ -13,6 +13,7 @@ public class UserLoginAdapter implements IUserLogin {
 	@Autowired
 	IUserLoginRepositery iUserLoginRepositery;
 	
+	@Override
 	public UserLogin createLoginDetails(User entity) {
 		return null;
 	}

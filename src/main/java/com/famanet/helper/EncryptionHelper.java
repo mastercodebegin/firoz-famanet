@@ -25,5 +25,6 @@ public class EncryptionHelper {
 		 bCryptPasswordEncoder = getbCryptPasswordEncoder();
 		return  bCryptPasswordEncoder.encode(pswd);
 	}
+	
 
 }

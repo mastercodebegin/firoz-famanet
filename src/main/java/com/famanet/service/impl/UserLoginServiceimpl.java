@@ -1,12 +1,13 @@
 package com.famanet.service.impl;
 
-import javax.transaction.Transactional;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.famanet.adapter.impl.UserLoginAdapter;
+import com.famanet.exception.ApplicationException;
 import com.famanet.helper.EncryptionHelper;
 import com.famanet.model.User;
 import com.famanet.model.UserLogin;
@@ -18,7 +19,10 @@ import com.famanet.util.FamaUtil;
 
 @Service
 public class UserLoginServiceimpl implements IUserLoginService {
-	 
+	
+	@Autowired
+	IUserLoginService iUserLoginService;
+	
 @Autowired
 UserLoginAdapter iUserLoginAdapter;
 @Autowired
@@ -61,5 +65,24 @@ public UserLogin create(UserLogin entity) {
 		//iUserLoginRepositery.save(userLogin);
 		return createdUser;
 	}
+	@Override
+	public UserLogin findByEmail(String email) {
+		return iUserLoginRepositery.findByUsername(email);
+		
+	}
+
+	@Override
+	public String login(UserLogin userLogin, HttpServletRequest request, HttpResponse response) throws ApplicationException {
+	String email = userLogin.getUsername();
+	UserLogin login = iUserLoginService.findByEmail(email);
+	
+	if(!encryptionHelper.checkPassword(userLogin.getPassword(), login.getPassword()))
+	{
+		throw new ApplicationException("Enter correct Password ");
+	}
+	return UserLogin;
+	}
+
+	
 
 }

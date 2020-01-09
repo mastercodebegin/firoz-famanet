@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.famanet.model.UserLogin;
 @Repository
 public interface IUserLoginRepositery extends JpaRepository<UserLogin, Integer> {
+	public UserLogin findByUsername(String email);
 
 }

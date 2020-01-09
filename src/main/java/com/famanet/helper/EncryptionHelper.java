@@ -25,6 +25,11 @@ public class EncryptionHelper {
 		 bCryptPasswordEncoder = getbCryptPasswordEncoder();
 		return  bCryptPasswordEncoder.encode(pswd);
 	}
+public boolean checkPassword(String userenterpswd,String loginpswd)
+{
+	bCryptPasswordEncoder = getbCryptPasswordEncoder();
+	return bCryptPasswordEncoder.matches(userenterpswd, loginpswd);
 	
+}
 
 }

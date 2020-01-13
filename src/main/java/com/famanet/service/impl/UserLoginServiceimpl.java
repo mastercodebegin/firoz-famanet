@@ -56,11 +56,12 @@ public UserLogin create(UserLogin entity) {
 		UserLogin userLogin=new UserLogin();
 		userLogin.setUsername(user.getEmail());
 		String randompswd = FamaUtil.getPassword(8);
-		System.out.println(randompswd);
+		//System.out.println(randompswd);
 		String encryptpswd=encryptionHelper.encodePassword(randompswd);
-		System.out.println(encryptpswd);
+		userLogin.setPassword(encryptpswd);
+		//System.out.println(encryptpswd);
 		userLogin.setUser(user);
-		userLogin.setPassword(encryptionHelper.encodePassword(randompswd));
+		
 		UserLogin createdUser = create(userLogin);
 		//iUserLoginRepositery.save(userLogin);
 		return createdUser;
@@ -75,12 +76,19 @@ public UserLogin create(UserLogin entity) {
 	public String login(UserLogin userLogin, HttpServletRequest request, HttpResponse response) throws ApplicationException {
 	String email = userLogin.getUsername();
 	UserLogin login = iUserLoginService.findByEmail(email);
+	if(login!=null)
+	{
 	
+	System.out.println("Got an Email");
+	}
+	else
+		System.out.println("Did not get any record");
 	if(!encryptionHelper.checkPassword(userLogin.getPassword(), login.getPassword()))
 	{
-		throw new ApplicationException("Enter correct Password ");
+		
+		throw new ApplicationException("****Enter correct Password******  " + userLogin.getPassword() +" "+ login.getPassword());
 	}
-	return UserLogin;
+	return "Login Success";
 	}
 
 	

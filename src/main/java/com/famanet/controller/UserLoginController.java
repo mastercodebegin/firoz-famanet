@@ -21,7 +21,7 @@ public class UserLoginController {
 	@PutMapping("/login")
 	public String login(@RequestBody UserLogin userLogin,HttpServletRequest request,HttpResponse response) throws ApplicationException
 	{
-		IUserLoginService.login(userLogin, request, response);
-		return /*response.toString()+request.toString();*/"User Logged In";
+		return IUserLoginService.login(userLogin, request, response);
+		
 	}
 }

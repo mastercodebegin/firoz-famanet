@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.famanet.adapter.impl.UserLoginAdapter;
 import com.famanet.exception.ApplicationException;
 import com.famanet.helper.EncryptionHelper;
+import com.famanet.helper.JwtHelper;
 import com.famanet.model.User;
 import com.famanet.model.UserLogin;
 import com.famanet.repositery.IUserLoginRepositery;
@@ -31,6 +32,9 @@ IUserLoginRepositery iUserLoginRepositery;
 IUserService IUserService;
 @Autowired
 EncryptionHelper encryptionHelper;
+@Autowired 
+JwtHelper jwtHelper;
+
 public UserLogin create(UserLogin entity) {
 	iUserLoginAdapter.create(entity);
 		return null;
@@ -56,14 +60,14 @@ public UserLogin create(UserLogin entity) {
 		UserLogin userLogin=new UserLogin();
 		userLogin.setUsername(user.getEmail());
 		String randompswd = FamaUtil.getPassword(8);
-		//System.out.println(randompswd);
+		System.out.println(randompswd);
 		String encryptpswd=encryptionHelper.encodePassword(randompswd);
 		userLogin.setPassword(encryptpswd);
 		//System.out.println(encryptpswd);
 		userLogin.setUser(user);
 		
 		UserLogin createdUser = create(userLogin);
-		//iUserLoginRepositery.save(userLogin);
+				//iUserLoginRepositery.save(userLogin);
 		return createdUser;
 	}
 	@Override
@@ -88,7 +92,8 @@ public UserLogin create(UserLogin entity) {
 		
 		throw new ApplicationException("****Enter correct Password******  " + userLogin.getPassword() +" "+ login.getPassword());
 	}
-	return "Login Success";
+	String token = jwtHelper.createJwtToken(login.getUsername(), login.getId());
+	return token;
 	}
 
 	

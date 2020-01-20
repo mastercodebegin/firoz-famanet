@@ -6,6 +6,7 @@ import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.famanet.adapter.impl.UserLoginAdapter;
 import com.famanet.exception.ApplicationException;
 import com.famanet.helper.EncryptionHelper;
@@ -82,20 +83,25 @@ public UserLogin create(UserLogin entity) {
 	UserLogin login = iUserLoginService.findByEmail(email);
 	if(login!=null)
 	{
+		System.out.println("Got an Email");
 	
-	System.out.println("Got an Email");
-	}
-	else
-		System.out.println("Did not get any record");
 	if(!encryptionHelper.checkPassword(userLogin.getPassword(), login.getPassword()))
 	{
 		
 		throw new ApplicationException("****Enter correct Password******  " + userLogin.getPassword() +" "+ login.getPassword());
-	}
+	 }
+	
 	String token = jwtHelper.createJwtToken(login.getUsername(), login.getId());
 	return token;
 	}
+	return "User not found";
+	}
 
 	
-
+	  public String decodeJwt(String jwtToken) 
+	  { 
+		  return  jwtHelper.getemail(jwtToken);
+		
+	  }
+	 
 }

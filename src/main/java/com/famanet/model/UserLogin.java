@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +23,7 @@ public class UserLogin {
 	private String password;
 	@OneToOne
 	@JoinColumn(name="user_id")
+	@JsonIgnore
 	private User user;
 	
 }

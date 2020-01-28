@@ -6,11 +6,12 @@ import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.auth0.jwt.interfaces.Claim;
 import com.famanet.adapter.impl.UserLoginAdapter;
 import com.famanet.exception.ApplicationException;
 import com.famanet.helper.EncryptionHelper;
 import com.famanet.helper.JwtHelper;
+import com.famanet.model.Department;
+import com.famanet.model.Roles;
 import com.famanet.model.User;
 import com.famanet.model.UserLogin;
 import com.famanet.repositery.IUserLoginRepositery;
@@ -35,6 +36,10 @@ IUserService IUserService;
 EncryptionHelper encryptionHelper;
 @Autowired 
 JwtHelper jwtHelper;
+@Autowired
+DepartmentServiceimpl departmentsServiceimpl;
+@Autowired
+RolesServiceimpl rolesServiceimpl; 
 
 public UserLogin create(UserLogin entity) {
 	iUserLoginAdapter.create(entity);
@@ -59,7 +64,12 @@ public UserLogin create(UserLogin entity) {
 	@Override
 	public UserLogin createLoginDetaiils(User user) {
 		UserLogin userLogin=new UserLogin();
-		userLogin.setUsername(user.getEmail());
+		Department department = new Department();
+		
+		department.setDepartment_name(user.getDepartment().getDepartment_name());;
+		
+		Roles roles = new Roles();
+		userLogin.setUsername((user.getPersonal_email()));
 		String randompswd = FamaUtil.getPassword(8);
 		System.out.println(randompswd);
 		String encryptpswd=encryptionHelper.encodePassword(randompswd);
@@ -68,7 +78,9 @@ public UserLogin create(UserLogin entity) {
 		userLogin.setUser(user);
 		
 		UserLogin createdUser = create(userLogin);
-				//iUserLoginRepositery.save(userLogin);
+		//rolesServiceimpl.create(user.getRoles());
+		//departmentsServiceimpl.create(user.getDepartment());
+		iUserLoginRepositery.save(userLogin);
 		return createdUser;
 	}
 	@Override
